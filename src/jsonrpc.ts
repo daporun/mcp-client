@@ -1,3 +1,5 @@
+// src/jsonrpc.ts
+
 export interface JSONRPCRequest {
   jsonrpc: "2.0";
   id: number;

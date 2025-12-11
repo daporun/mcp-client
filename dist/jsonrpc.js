@@ -1,3 +1,4 @@
+// src/jsonrpc.ts
 let idCounter = 1;
 export function createRequest(method, params) {
     return {
