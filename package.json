@@ -1,9 +1,9 @@
 {
-  "name": "mcp-client",
+  "name": "mcp-client-general",
   "version": "1.0.0",
   "type": "module",
-  "description": "Minimal cross-platform CLI client for the Model Context Protocol (MCP).",
-  "main": "index.js",
+  "description": "General-purpose MCP Client and cross-platform CLI for the Model Context Protocol (MCP). Supports JSON-RPC over stdio with robust framing, handshake detection, and multi-request workflows.",
+  "main": "dist/index.js",
   "bin": {
     "mcp": "./dist/index.js"
   },
@@ -15,22 +15,33 @@
     "prepare": "npm run build",
     "start": "node dist/index.js",
     "link": "npm link",
-    "unlink": "npm unlink -g mcp-client || true",
+    "unlink": "npm unlink -g mcp-client-general || true",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
     "format": "prettier --check ."
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/daporun/mcp-client.git"
+    "url": "git+https://github.com/daporun/mcp-client-general.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "mcp client",
+    "mcp",
+    "model-context-protocol",
+    "jsonrpc",
+    "cli",
+    "client",
+    "stdio",
+    "agent",
+    "protocol",
+    "framework"
+  ],
+  "author": "DAPO / daporun <info@dapo.run>",
+  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/daporun/mcp-client/issues"
+    "url": "https://github.com/daporun/mcp-client-general/issues"
   },
-  "homepage": "https://github.com/daporun/mcp-client#readme",
+  "homepage": "https://github.com/daporun/mcp-client-general#readme",
   "devDependencies": {
     "@types/node": "^25.0.0",
     "@typescript-eslint/eslint-plugin": "^8.49.0",

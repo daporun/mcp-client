@@ -13,15 +13,29 @@ type MaybeJSONRPC = {
 
 function printUsage(): void {
   console.error(`
-Minimal MCP Client
+General MCP Client
 ------------------
 
 Usage:
   mcp run "<serverCommand>"
 
-Pipe mode:
+Examples:
+  # Run against any MCP-compliant server
   echo '{"jsonrpc":"2.0","id":1,"method":"providers.list"}' |
     mcp run "node dist/server.js"
+
+Environment Variables:
+  MCP_DEBUG=1    Enables verbose debug output (framing, handshake, events)
+
+Debug example:
+  MCP_DEBUG=1 mcp run "node dist/server.js"
+
+Compatible with:
+  - Any MCP-compliant server implementation
+  - The General MCP Server (reference implementation)
+
+More documentation:
+  https://dapo.run/mcp
 `);
 }
 
@@ -45,13 +59,29 @@ async function main(): Promise<void> {
   }
 
   if (args[0] !== "run") {
-    console.error("Unknown command. Only 'run' is supported.");
+
+    console.error(`Unknown command: ${args[0]}
+
+  Usage:
+    mcp run "<serverCommand>"
+
+  More documentation:
+    https://dapo.run/mcp
+  `);
     process.exitCode = 1;
     return;
   }
 
   if (args.length < 2) {
-    console.error('Usage: mcp run "node dist/server.js"');
+    console.error(`Missing server command.
+
+  Examples:
+    mcp run "node dist/server.js"
+    mcp run "./my-mcp-server"
+
+  More documentation:
+    https://dapo.run/mcp
+  `);
     process.exitCode = 1;
     return;
   }

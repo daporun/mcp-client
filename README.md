@@ -1,6 +1,6 @@
 # mcp-client
 
-Minimal, streaming-friendly MCP (Model Context Protocol) client for Node.js.
+General, streaming-friendly MCP (Model Context Protocol) client for Node.js.
 
 [![npm version](https://img.shields.io/npm/v/mcp-client.svg)](https://npmjs.com/package/mcp-client)
 ![npm downloads](https://img.shields.io/npm/dm/mcp-client.svg)
@@ -13,7 +13,7 @@ Minimal, streaming-friendly MCP (Model Context Protocol) client for Node.js.
 - Supports multiple requests per process (piped line-by-line)  
 - CLI + programmatic TypeScript API  
 
-> This package is designed to be a generic, open-source MCP client – tested with the DAPO MCP Server, but not tied to it.
+> This package is designed to be a generic, open-source MCP client. It works with any MCP-compliant server implementation, including the reference mcp-server package.
 
 ---
 
@@ -47,7 +47,7 @@ mcp run "node dist/server.js"
 ### Send a single JSON-RPC request
 ```bash
 echo '{"jsonrpc":"2.0","id":1,"method":"providers.list"}' \
-  | mcp run "node ../dapo-mcp-server/dist/server.js"
+  | mcp run "node ../mcp-server/dist/server.js"
 ```
 
 ### Example output
@@ -73,7 +73,7 @@ echo '{"jsonrpc":"2.0","id":1,"method":"providers.list"}' \
 printf '%s\n%s\n' \
   '{"jsonrpc":"2.0","id":1,"method":"providers.list"}' \
   '{"jsonrpc":"2.0","id":2,"method":"steps.list"}' \
-  | mcp run "node ../dapo-mcp-server/dist/server.js"
+  | mcp run "node ../mcp-server/dist/server.js"
 ```
 
 ### Example output
@@ -96,7 +96,7 @@ printf '%s\n%s\n' \
 
 ```bash
 echo '{"jsonrpc":"2.0","id":3,"method":"scoring.schema"}' \
-  | mcp run "node ../dapo-mcp-server/dist/server.js"
+  | mcp run "node ../mcp-server/dist/server.js"
 ```
 
 ```json
@@ -121,7 +121,7 @@ import type { JSONRPCRequest } from "mcp-client/jsonrpc";
 async function main() {
   const proc = new MCPProcess({
     command: "node",
-    args: ["../dapo-mcp-server/dist/server.js"],
+    args: ["../mcp-server/dist/server.js"],
     startupTimeoutMs: 4000,
     shutdownTimeoutMs: 3000
   });

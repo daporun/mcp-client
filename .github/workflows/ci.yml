@@ -15,7 +15,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Setup Node (version can be adjusted)
+      # Setup Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -24,16 +24,20 @@ jobs:
 
       # Install dependencies
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       # Lint
       - name: Lint
         run: npm run lint
 
-      # TypeCheck (tsc --noEmit)
+      # TypeCheck
       - name: TypeScript type check
         run: npx tsc --noEmit
 
       # Build
       - name: Build
         run: npm run build
+
+      # Test
+      - name: Run tests
+        run: npm test
