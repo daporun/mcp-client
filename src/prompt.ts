@@ -2,28 +2,36 @@ import readline from "node:readline";
 import { createRequest } from "./jsonrpc.js";
 import type { MCPProcess } from "./runner.js";
 
-export function startPrompt(mcp: MCPProcess): void {
+export function startPrompt(proc: MCPProcess): void {
   const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
     historySize: 200
   });
 
-  console.log("mcp> Type JSON-RPC requests, or 'exit' to quit.");
+  console.error("MCP Prompt Ready");
 
-  rl.on("line", line => {
-    if (line.trim() === "exit") {
+  proc.on("rpc-response", (msg) => {
+    console.error("RESPONSE:", JSON.stringify(msg, null, 2));
+  });
+
+  rl.setPrompt("mcp> ");
+  rl.prompt();
+
+  rl.on("line", (line) => {
+    const trimmed = line.trim();
+    if (trimmed === "exit") {
       rl.close();
-      process.exit(0);
+      proc.close();
+      return;
     }
-
     try {
-      const parsed = JSON.parse(line.trim());
-      const req = createRequest(parsed.method, parsed.params);
-      mcp.send(req);
+      const json = JSON.parse(trimmed);
+      const req = createRequest(json.method, json.params);
+      proc.send(req);
     } catch {
-      console.log("Invalid JSON. Example:");
-      console.log(`{"method":"providers.list","params":{}}`);
+      console.error("Invalid JSON input");
     }
+    rl.prompt();
   });
 }

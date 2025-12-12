@@ -1,40 +1,57 @@
 {
-  "name": "mcp-client",
+  "name": "mcp-client-general",
   "version": "1.0.0",
   "type": "module",
-  "description": "Minimal cross-platform CLI client for the Model Context Protocol (MCP).",
-  "main": "index.js",
+  "description": "General-purpose MCP Client and cross-platform CLI for the Model Context Protocol (MCP). Supports JSON-RPC over stdio with robust framing, handshake detection, and multi-request workflows.",
+  "main": "dist/index.js",
   "bin": {
-    "mcp": "./bin/mcp"
+    "mcp": "./dist/index.js"
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "clean": "rm -rf dist",
     "dev": "tsx src/index.ts",
-
-    "test": "node dist/test/test-runner.js",
+    "test": "vitest --run",
     "prepare": "npm run build",
-
-    "lint": "echo \"No linter configured yet\"",
     "start": "node dist/index.js",
-
     "link": "npm link",
-    "unlink": "npm unlink -g mcp-client || true"
+    "unlink": "npm unlink -g mcp-client-general || true",
+    "lint": "eslint . --ext .ts",
+    "lint:fix": "eslint . --ext .ts --fix",
+    "format": "prettier --check ."
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/daporun/mcp-client.git"
+    "url": "git+https://github.com/daporun/mcp-client-general.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "mcp client",
+    "mcp",
+    "model-context-protocol",
+    "jsonrpc",
+    "cli",
+    "client",
+    "stdio",
+    "agent",
+    "protocol",
+    "framework"
+  ],
+  "author": "DAPO / daporun <info@dapo.run>",
+  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/daporun/mcp-client/issues"
+    "url": "https://github.com/daporun/mcp-client-general/issues"
   },
-  "homepage": "https://github.com/daporun/mcp-client#readme",
+  "homepage": "https://github.com/daporun/mcp-client-general#readme",
   "devDependencies": {
     "@types/node": "^25.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.49.0",
+    "@typescript-eslint/parser": "^8.49.0",
+    "eslint": "^9.39.1",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.4",
+    "prettier": "^3.7.4",
     "tsx": "^4.21.0",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.15"
   }
 }
