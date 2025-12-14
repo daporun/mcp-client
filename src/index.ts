@@ -3,6 +3,7 @@
 // src/index.ts
 import { MCPProcess } from "./runner.js";
 import { createRequest } from "./jsonrpc.js";
+import { getProfile } from "./profiles/index.js";
 
 type MaybeJSONRPC = {
   id?: number | string;
@@ -18,6 +19,7 @@ General MCP Client
 
 Usage:
   mcp run "<serverCommand>"
+  mcp run --profile web-dev
 
 Examples:
   # Run against any MCP-compliant server
@@ -58,12 +60,29 @@ async function main(): Promise<void> {
     return;
   }
 
+  let profileId: string | undefined;
+  
+  // very simple flag parsing (no dependency)
+  for (let i = 0; i < args.length; i++) {
+    if (args[i] === "--profile") {
+      if (!args[i + 1]) {
+        console.error("--profile requires a value");
+        process.exitCode = 1;
+        return;
+      }
+      profileId = args[i + 1];
+      args.splice(i, 2);
+      break;
+    }
+  } 
+
   if (args[0] !== "run") {
 
     console.error(`Unknown command: ${args[0]}
 
   Usage:
-    mcp run "<serverCommand>"
+    mcp run "node dist/server.js"
+    mcp run --profile web-dev
 
   More documentation:
     https://dapo.run/mcp
@@ -72,21 +91,35 @@ async function main(): Promise<void> {
     return;
   }
 
-  if (args.length < 2) {
+  let serverCommand: string | undefined;
+
+  if (args.length >= 2) {
+    serverCommand = args[1];
+  } else if (profileId) {
+    const profile = getProfile(profileId);
+    if (!profile) {
+      console.error(`Unknown profile: ${profileId}`);
+      process.exitCode = 1;
+      return;
+    }
+    serverCommand =
+      process.env.MCP_PROFILE_SERVER ??
+      profile.defaultCommand;
+  } else {
     console.error(`Missing server command.
 
   Examples:
     mcp run "node dist/server.js"
-    mcp run "./my-mcp-server"
+    mcp run --profile web-dev
 
   More documentation:
-    https://dapo.run/mcp
+    https://dapo.run/mcp    
   `);
     process.exitCode = 1;
     return;
   }
 
-  const cmd = args[1].split(" ");
+  const cmd = serverCommand.split(" ");
   const command = cmd[0];
   const cmdArgs = cmd.slice(1);
 

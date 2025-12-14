@@ -5,7 +5,7 @@
   "description": "General-purpose MCP Client and cross-platform CLI for the Model Context Protocol (MCP). Supports JSON-RPC over stdio with robust framing, handshake detection, and multi-request workflows.",
   "main": "dist/index.js",
   "bin": {
-    "mcp": "./dist/index.js"
+    "mcp": "dist/index.js"
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",
