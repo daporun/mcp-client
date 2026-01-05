@@ -1,11 +1,11 @@
-# mcp-client
+# mcp-client-general
 
 General, streaming-friendly MCP (Model Context Protocol) client for Node.js.
 
-[![npm version](https://img.shields.io/npm/v/mcp-client.svg)](https://npmjs.com/package/mcp-client)
-![npm downloads](https://img.shields.io/npm/dm/mcp-client.svg)
+[![npm version](https://img.shields.io/npm/v/mcp-client-general.svg)](https://npmjs.com/package/mcp-client-general)
+![npm downloads](https://img.shields.io/npm/dm/mcp-client-general.svg)
 ![license](https://img.shields.io/badge/license-MIT-blue.svg)
-![node version](https://img.shields.io/node/v/mcp-client.svg)
+![node version](https://img.shields.io/node/v/mcp-client-general.svg)
 
 - Spawns an MCP-compatible server as a child process  
 - Speaks JSON-RPC 2.0 over stdin / stdout  
@@ -13,26 +13,27 @@ General, streaming-friendly MCP (Model Context Protocol) client for Node.js.
 - Supports multiple requests per process (piped line-by-line)  
 - CLI + programmatic TypeScript API  
 
-> This package is designed to be a generic, open-source MCP client. It works with any MCP-compliant server implementation, including the reference mcp-server package.
+> This package is designed to be a generic, open-source MCP client. It works with any MCP-compliant server implementation, including the reference mcp-server-general package.
 
 ---
 
 ## Features
 
-- **Child process orchestration** – monitors stderr, exit, error  
-- **Handshake detection** – first valid JSON object = handshake  
-- **Framing-agnostic parsing** – safely ignores `Content-Length`  
-- **JSON-RPC 2.0 support** – id-based pending map, timeouts  
-- **CLI & Library** – usable from terminal or TypeScript  
+- **Zero-config profiles** – run built-in MCP stacks without manual wiring
+- **Child process orchestration** – monitors stderr, exit, error
+- **Handshake detection** – first valid JSON object = handshake
+- **Framing-agnostic parsing** – safely ignores `Content-Length`
+- **JSON-RPC 2.0 support** – id-based pending map, timeouts
+- **CLI & Library** – usable from terminal or TypeScript
 
 ---
 
 ## Installation
 
 ```bash
-npm install -g mcp-client
+npm install -g mcp-client-general
 # or
-npm install mcp-client --save-dev
+npm install mcp-client-general --save-dev
 ```
 
 ---
@@ -47,7 +48,7 @@ mcp run "node dist/server.js"
 ### Send a single JSON-RPC request
 ```bash
 echo '{"jsonrpc":"2.0","id":1,"method":"providers.list"}' \
-  | mcp run "node ../mcp-server/dist/server.js"
+  | mcp run "node ../mcp-server-general/dist/server.js"
 ```
 
 ### Example output
@@ -73,7 +74,7 @@ echo '{"jsonrpc":"2.0","id":1,"method":"providers.list"}' \
 printf '%s\n%s\n' \
   '{"jsonrpc":"2.0","id":1,"method":"providers.list"}' \
   '{"jsonrpc":"2.0","id":2,"method":"steps.list"}' \
-  | mcp run "node ../mcp-server/dist/server.js"
+  | mcp run "node ../mcp-server-general/dist/server.js"
 ```
 
 ### Example output
@@ -96,7 +97,7 @@ printf '%s\n%s\n' \
 
 ```bash
 echo '{"jsonrpc":"2.0","id":3,"method":"scoring.schema"}' \
-  | mcp run "node ../mcp-server/dist/server.js"
+  | mcp run "node ../mcp-server-general/dist/server.js"
 ```
 
 ```json
@@ -115,13 +116,13 @@ echo '{"jsonrpc":"2.0","id":3,"method":"scoring.schema"}' \
 ## Programmatic Usage (TypeScript)
 
 ```ts
-import { MCPProcess } from "mcp-client";
-import type { JSONRPCRequest } from "mcp-client/jsonrpc";
+import { MCPProcess } from "mcp-client-general";
+import type { JSONRPCRequest } from "mcp-client-general/jsonrpc";
 
 async function main() {
   const proc = new MCPProcess({
     command: "node",
-    args: ["../mcp-server/dist/server.js"],
+    args: ["../mcp-server-general/dist/server.js"],
     startupTimeoutMs: 4000,
     shutdownTimeoutMs: 3000
   });

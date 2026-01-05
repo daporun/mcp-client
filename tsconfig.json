@@ -13,5 +13,11 @@
     "declaration": false,
     "resolveJsonModule": true
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*"],
+  "exclude": [
+    "**/*.test.ts",
+    "**/__tests__/**",
+    "tests",
+    "examples"
+  ]
 }

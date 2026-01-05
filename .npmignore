@@ -1,0 +1,14 @@
+# source & tests
+src/
+tests/
+examples/
+
+# build-time test artifacts (IMPORTANT)
+dist/**/__tests__/**
+
+# configs & tooling
+.vscode/
+.github/
+eslint.config.js
+tsconfig*.json
+vitest.config.*
