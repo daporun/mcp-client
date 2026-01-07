@@ -1,6 +1,6 @@
 # mcp-client-general
 
-General, streaming-friendly MCP (Model Context Protocol) client for Node.js.
+A general-purpose, streaming-friendly MCP (Model Context Protocol) client for Node.js.
 
 [![npm version](https://img.shields.io/npm/v/mcp-client-general.svg)](https://npmjs.com/package/mcp-client-general)
 ![npm downloads](https://img.shields.io/npm/dm/mcp-client-general.svg)
@@ -13,7 +13,10 @@ General, streaming-friendly MCP (Model Context Protocol) client for Node.js.
 - Supports multiple requests per process (piped line-by-line)  
 - CLI + programmatic TypeScript API  
 
-> This package is designed to be a generic, open-source MCP client. It works with any MCP-compliant server implementation, including the reference mcp-server-general package.
+> This package is designed to be a generic, open-source MCP client.  
+> It works with any MCP-compliant server implementation, including  
+> **mcp-server-general** – a production-ready, plugin-driven MCP server:  
+> https://github.com/daporun/mcp-server-general
 
 ---
 
@@ -115,6 +118,8 @@ echo '{"jsonrpc":"2.0","id":3,"method":"scoring.schema"}' \
 
 ## Programmatic Usage (TypeScript)
 
+This example shows how to launch and interact with an MCP server programmatically.
+
 ```ts
 import { MCPProcess } from "mcp-client-general";
 import type { JSONRPCRequest } from "mcp-client-general/jsonrpc";
@@ -151,6 +156,14 @@ main().catch((err) => {
 ```
 
 ---
+
+## Getting Started with a General MCP Server
+
+To quickly try this client with a production-ready MCP server, see:
+
+- **mcp-server-general**  
+  A general-purpose, plugin-driven MCP server  
+  https://github.com/daporun/mcp-server-general
 
 ## Design Notes
 
